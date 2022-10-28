@@ -1,0 +1,11 @@
+.hoverWhite button:hover {
+  color: white;
+}
+
+.MuiMenu-list {
+  background-color: #272727;
+  color: white;
+}
+.transitionSmooth {
+  transition: all 0.2s ease-in-out;
+}
