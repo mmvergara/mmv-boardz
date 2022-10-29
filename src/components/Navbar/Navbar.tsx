@@ -9,7 +9,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuList from "@mui/material/MenuList";
 import Avatar from "@mui/material/Avatar";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import NavButtons from "./Menus/NavButtons";
+import MenuLinks from "./Menus/MenuLinks";
 import { navButtonStlye } from "../Style/SXStyles";
 import { ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
@@ -17,8 +18,7 @@ import { CrownTheme } from "../Style/Theme";
 import { useSelector } from "react-redux";
 import { RootState } from "../../state/StoreIndex";
 import { useState, useRef } from "react";
-import NavButtons from "./Menus/NavButtons";
-import MenuLinks from "./Menus/MenuLinks";
+
 
 const Navbar: React.FC = () => {
   const { isAuthenticated, userpic } = useSelector((state: RootState) => state.AuthSlice);

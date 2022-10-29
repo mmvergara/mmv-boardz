@@ -20,7 +20,6 @@ export const registerValidationSchema = yup.object({
     .required("Username field is required."),
   password: yup
     .string()
-    .notOneOf([yup.ref("username")], "Password must not match the username.")
     .min(8, "Minimum of 8 characters for password")
     .max(30, "Maximum of 30 characters")
     .trim()
@@ -28,7 +27,6 @@ export const registerValidationSchema = yup.object({
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Password must match.")
-    .notOneOf([yup.ref("username")], "Password must not match the username.")
     .min(8, "Minimum of 8 characters for password")
     .max(30, "Maximum of 30 characters")
     .trim()

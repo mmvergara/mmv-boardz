@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import BoardzDetail from "./components/Feed/BoardzDetail";
 import ErrorModal from "./components/Modal/ErrorModal";
+import LoadingSnowSpin from "./assets/LoadingSnowSpin";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "./state/StoreIndex";
@@ -11,12 +12,11 @@ import { Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { AuthSliceActions } from "./state/AuthSlice";
 import { useNavigate } from "react-router-dom";
-
 import { lazy } from "react";
-import LoadingSnowSpin from "./assets/LoadingSnowSpin";
 
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const SettingsPage = lazy(() => import("./pages/SettingsPage"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
 const GlobalChatPage = lazy(() => import("./pages/GlobalChatPage"));
 const CreateBoardzPage = lazy(() => import("./pages/CreateBoardzPage"));
 
@@ -49,9 +49,9 @@ const App: React.FC = () => {
             {isAuthenticated && <Route path='/boardz/:boardId' element={<BoardzDetail />} />}
             {isAuthenticated && <Route path='/settings' element={<SettingsPage />} />}
             {isAuthenticated && <Route path='/chat' element={<GlobalChatPage />} />}
-
-            {!isAuthenticated && <Route path='/auth/login' element={<LoginPage />} />}
             {!isAuthenticated && <Route path='/auth/register' element={<RegisterPage />} />}
+            {!isAuthenticated && <Route path='/auth/login' element={<LoginPage />} />}
+            <Route path='/about' element={<AboutPage />} />
             <Route path='*' element={<h1>404 Not Found</h1>} />
           </Routes>
         </Suspense>

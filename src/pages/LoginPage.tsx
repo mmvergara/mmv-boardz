@@ -1,7 +1,3 @@
 import LoginIndex from "../components/Forms/Login";
-
-const LoginPage: React.FC = () => {
-  return <LoginIndex />;
-};
-
+const LoginPage: React.FC = () => <LoginIndex />;
 export default LoginPage;

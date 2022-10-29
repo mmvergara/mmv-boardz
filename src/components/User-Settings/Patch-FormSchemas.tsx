@@ -9,14 +9,12 @@ export const passwordPatchSchema = yup.object({
     .required("Username field is required."),
   PUpassword: yup
     .string()
-    .notOneOf([yup.ref("username")], "Password must not match the username.")
     .min(8, "Minimum of 8 characters for password")
     .max(30, "Maximum of 30 characters")
     .trim()
     .required("Current Password field is required."),
   PUnewPassword: yup
     .string()
-    .notOneOf([yup.ref("username")], "Password must not match the username.")
     .min(8, "Minimum of 8 characters for password")
     .max(30, "Maximum of 30 characters")
     .trim()

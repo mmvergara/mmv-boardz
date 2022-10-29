@@ -45,6 +45,10 @@ const ChangeUsername: React.FC<{ username: string }> = ({ username }) => {
       <Typography variant='h4' sx={{ my: 2 }}>
         Change Username {isLoading && <SnowSpinSM />}
       </Typography>
+      <Typography variant='body1' sx={{ my: 1, marginLeft: "2px" }}>
+        Current Username: {username}
+      </Typography>
+
       <form onSubmit={formik.handleSubmit}>
         <TextField
           sx={{ marginBottom: "20px" }}

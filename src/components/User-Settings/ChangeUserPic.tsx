@@ -6,6 +6,7 @@ import { useState } from "react";
 import { patchChangeUserPic } from "../../api/AuthController";
 import { useDispatch } from "react-redux";
 import { AuthSliceActions } from "../../state/AuthSlice";
+import SnowSpinSM from "../../assets/SnowSpinSM";
 
 const AddProfilePic: React.FC = () => {
   const {
@@ -29,13 +30,13 @@ const AddProfilePic: React.FC = () => {
     const result = await patchChangeUserPic(form);
     if (result.ok && result.imgPath)
       dispatch(AuthSliceActions.changeUserPic({ imgPath: result.imgPath }));
-
+    console.log(result);
     setStatus({ hasError: !result.ok, isLoading: false, statusText: result.message });
   };
 
   return (
     <>
-      <Typography variant='h4'>Add Profile Picture</Typography>
+      <Typography variant='h4'>Add Profile Picture {isLoading && <SnowSpinSM />}</Typography>
       <Typography variant='h6'>Select a photo as a new Profile Picture</Typography>
       <Button
         variant='outlined'
@@ -52,7 +53,7 @@ const AddProfilePic: React.FC = () => {
             sx={{ width: 36, height: 36, marginLeft: "20px" }}
           />
         )}
-      </Button>{" "}
+      </Button>
       <br />
       <Button
         variant='contained'
@@ -63,7 +64,7 @@ const AddProfilePic: React.FC = () => {
       >
         Save
       </Button>
-      <b style={{ marginLeft: "10px", color: hasError ? "green" : "red" }}>
+      <b style={{ marginLeft: "10px", color: hasError ? "red" : "green" }}>
         {!isLoading && statusText}
       </b>
     </>
