@@ -28,6 +28,7 @@ exports.putMessage = async (req, res, next) => {
     next(error);
   }
 };
+
 exports.deleteMessage = async (req, res, next) => {
   const userId = req.session.userId;
   const { messageID } = req.params;

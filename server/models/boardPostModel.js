@@ -23,15 +23,6 @@ const boardPostSchema = new Schema(
         ref: "User",
       },
     ],
-    isSharedPost: {
-      originalAuthor: {
-        type: Types.ObjectId,
-        ref: "User",
-      },
-      originalPostId: {
-        type: String,
-      },
-    },
     comments: [
       {
         type: Types.ObjectId,

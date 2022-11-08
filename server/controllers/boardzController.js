@@ -6,7 +6,7 @@ const { validationResult } = require("express-validator");
 
 exports.getBoardz = async (req, res, next) => {
   const currentPage = req.query.page || 1;
-  const perPage = req.query.count || 3
+  const perPage = req.query.count || 3;
   const boardList = await boardPostModel
     .find()
     .sort({ createdAt: -1 })
@@ -170,13 +170,14 @@ exports.deleteComment = async (req, res, next) => {
   const board = await boardPostModel.findOne({ _id: boardId });
   try {
     if (!comment || !board) throw newError("Board or Comment not found", 404);
-    if (comment?.commentAuthor.toString() !== userId.toString())
+    if (comment?.commentAuthor.toString() !== userId.toString()) {
       throw newError("You are not authorized to delete this comment", 401);
+    }
     board.comments.pull(commentId);
     await comment.delete();
     await board.save();
     res.status(200).send({ message: "Comment Delete", ok: true });
-  } catch (error) {
+  } catch (err) {
     console.log("Something went wrong on boardController deleteComment");
     next(err);
   }
@@ -187,11 +188,12 @@ exports.deleteBoardz = async (req, res, next) => {
   const board = await boardPostModel.findOne({ _id: boardId });
   try {
     if (!board) throw newError("Board not found", 404);
-    if (board.author.toString() !== userId.toString())
+    if (board.author.toString() !== userId.toString()) {
       throw newError("You are not authorized to delete this board", 404);
+    }
     await board.delete();
     res.status(200).send({ message: "Board was Deleted", ok: true });
-  } catch (error) {
+  } catch (err) {
     console.log("Something went wrong on boardController deleteBoardz");
     next(err);
   }

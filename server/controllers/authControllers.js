@@ -10,9 +10,7 @@ exports.putRegister = async (req, res, next) => {
 
   try {
     if (email.includes(" ") || username.includes(" ") || password.includes(" ")) {
-      const newErr = new Error("Spaces are not allowed in all fields");
-      newErr.statusCode === 422;
-      throw newErr;
+      throw newError("Spaces are not allowed in all fields", 422);
     }
     const newUser = new userModel({
       email,
@@ -24,27 +22,16 @@ exports.putRegister = async (req, res, next) => {
     if (!validationErrors.isEmpty()) {
       let data = "";
       validationErrors.array().forEach((x) => (data += x.msg + "\n"));
-      const newErr = new Error(`Registration Unsuccessful + ${data}`);
-      newErr.statusCode = 422;
-      throw newErr;
+      throw newError(`Registration Unsuccessful + ${data}`, 422);
     }
-
     const similarUsernameExist = userModel.findOne({ username: username });
     const similarEmailExist = userModel.findOne({ email: email });
     const foundSimilarities = await Promise.all([similarUsernameExist, similarEmailExist]);
-    if (foundSimilarities[1] !== null) {
-      const newErr = new Error("Email already exists, try a new one");
-      newErr.statusCode = 422;
-      throw newErr;
-    }
-    if (foundSimilarities[0] !== null) {
-      const newErr = new Error("Username already exists, try a new one");
-      newErr.statusCode = 422;
-      throw newErr;
-    }
+    if (foundSimilarities[1] !== null) throw newError("Email already exists", 400);
+    if (foundSimilarities[0] !== null) throw newError("Username already exists", 400);
 
     //Saving
-    const saveResult = await newUser.save();
+    await newUser.save();
     res.status(201).send({
       message: "Registration Successful",
       ok: true,
@@ -54,6 +41,7 @@ exports.putRegister = async (req, res, next) => {
     next(err);
   }
 };
+
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const validationErrors = validationResult(req);
@@ -64,24 +52,17 @@ exports.postLogin = async (req, res, next) => {
       validationErrors.array().forEach((x) => (data += x.msg + "\n"));
       res.status(422).send({ message: "Login Unsuccessful", data });
     }
+
     if (email.includes(" ") || password.includes(" ")) {
-      const newErr = new Error("Spaces are not allowed in all fields");
-      errStatusCode === 422;
-      throw newErr;
+      throw newError("Spaces are not allowed in all fields", 422);
     }
+
     const foundUser = await userModel.findOne({ email: email });
-    if (!foundUser) {
-      const newErr = new Error("Invalid Email");
-      newErr.statusCode = 422;
-      throw newErr;
-    }
+    if (!foundUser) throw newError("Invalid Email", 422);
+
     const comparisonResult = await bcrypt.compare(password, foundUser.password);
-    if (!comparisonResult) {
-      const newErr = new Error("Invalid Password");
-      newErr.statusCode = 422;
-      S;
-      throw newErr;
-    }
+    if (!comparisonResult) throw newError("Invalid Password", 422);
+
     req.session.isLoggedIn = true;
     req.session.userId = foundUser._id;
     res.status(200).send({
@@ -96,18 +77,16 @@ exports.postLogin = async (req, res, next) => {
     });
     return;
   } catch (err) {
-    if (!err.statusCode) err.statusCode = 500;
     console.log("Something went wrong on authController postLogin");
     next(err);
-    return err;
   }
 };
 exports.postLogout = (req, res, next) => {
-  req.session.destroy(function (err) {
-    // if(!!err) throw new Error('Could not Log out properly')
+  req.session.destroy(function () {
     res.status(200).send({ message: "Logged Out Successfully", ok: true });
   });
 };
+
 exports.patchChangePassword = async (req, res, next) => {
   const userId = req.session.userId;
   const { newPassword, oldPassword } = req.body;
@@ -120,19 +99,16 @@ exports.patchChangePassword = async (req, res, next) => {
 
   const foundUser = await userModel.findOne({ _id: userId });
   try {
-    if (!foundUser) {
-      throw newError("User not found", 422);
-    }
+    if (!foundUser) throw newError("User not found", 422);
+
     const comparisonResult = await bcrypt.compare(oldPassword, foundUser.password);
-    if (!comparisonResult) {
-      throw newError("Wrong Password");
-    }
+    if (!comparisonResult) throw newError("Wrong Password");
+
     foundUser.password = await bcrypt.hash(newPassword, 8);
     await foundUser.save();
     res.status(200).send({ message: "Password Changed Successfully", ok: true });
   } catch (err) {
     console.log('Something wen"t wrong in patchChangePassowrd');
-    err.statusCode = err.statusCode || 500;
     next(err);
   }
 };
