@@ -13,10 +13,13 @@ import { useDispatch } from "react-redux";
 import { AuthSliceActions } from "../../state/AuthSlice";
 import { ErrHandlingSliceActions } from "../../state/ErrHandlingSlice";
 import { postLogin } from "../../api/AuthController";
+import { useState } from "react";
 const LoginIndex: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const loginFormSubmitHandler = async () => {
+    setIsLoading(true);
     const data = {
       email: formik.values.email,
       password: formik.values.password,
@@ -35,6 +38,7 @@ const LoginIndex: React.FC = () => {
         })
       );
     }
+    setIsLoading(false);
   };
   const formik = useFormik({
     initialValues: {
@@ -90,7 +94,7 @@ const LoginIndex: React.FC = () => {
               size='large'
               sx={{ width: "100%", marginBottom: "20px" }}
             >
-              Login
+              {isLoading ? "Loggin in . . ." : "Login"}
             </Button>
             <Link to='/auth/register'>
               <Button variant='outlined' size='large' sx={{ width: "100%", marginBottom: "20px" }}>
@@ -98,6 +102,8 @@ const LoginIndex: React.FC = () => {
               </Button>
             </Link>
           </Box>
+          {isLoading &&
+            "Backend is hosted for free by onRender.com logging in might take a while, service will speed up once the first response is received."}
         </Container>
       </main>
     </ThemeProvider>

@@ -23,9 +23,9 @@ const CreateBoardzPage = lazy(() => import("./pages/CreateBoardzPage"));
 const App: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { tokenExpirationDate, isAuthenticated } = useSelector((state: RootState) => {
-    return state.AuthSlice;
-  });
+  const { tokenExpirationDate, isAuthenticated } = useSelector(
+    (state: RootState) => state.AuthSlice
+  );
 
   let time = new Date().getTime();
   useEffect(() => {
