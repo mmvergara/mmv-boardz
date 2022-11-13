@@ -30,6 +30,23 @@ const About: React.FC = () => {
               Go Back
             </Button>
           </Link>
+          <a href='https://mmv-docs.vercel.app/' target='_blank' rel='noreferrer'>
+            <Button
+              variant='contained'
+              color='secondary'
+              sx={{
+                color: "white",
+                display: "block",
+                fontWeight: "bold",
+                filter: "none",
+                textAlign: "center",
+                margin: "auto",
+                my: 2,
+              }}
+            >
+              Developer Docs
+            </Button>
+          </a>
           <Typography variant='h6' sx={{ textAlign: "center", marginTop: "1em" }}>
             MERN Stack <br />
             REST API <br />
