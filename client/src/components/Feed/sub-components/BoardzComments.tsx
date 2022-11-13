@@ -20,13 +20,13 @@ type BCProps = {
 const BoardzComments: React.FC<BCProps> = ({ updateBoardz, boardId, commentsList }) => {
   const curUser = useSelector((state: RootState) => state.AuthSlice);
 
-  const updateHandler = () => {
-    updateBoardz(boardId);
-  };
+  const updateHandler = () => updateBoardz(boardId);
+
   const LikeCommentHandler = async (commentId: string) => {
     await postLikeCommentHandler(commentId);
     updateHandler();
   };
+
   const handleDeleteComment = async (commentId: string) => {
     await deleteCommentHandler(boardId, commentId);
     updateHandler();

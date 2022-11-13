@@ -40,14 +40,14 @@ const LoginIndex: React.FC = () => {
     }
     setIsLoading(false);
   };
-  const formik = useFormik({
-    initialValues: {
-      email: "salt2@gmail.com",
-      password: "salt1234",
-    },
-    validationSchema: loginValidationSchema,
-    onSubmit: loginFormSubmitHandler,
-  });
+    const formik = useFormik({
+      initialValues: {
+        email: "salt2@gmail.com",
+        password: "salt1234",
+      },
+      validationSchema: loginValidationSchema,
+      onSubmit: loginFormSubmitHandler,
+    });
 
   return (
     <ThemeProvider theme={CrownTheme}>

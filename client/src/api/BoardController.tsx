@@ -22,6 +22,7 @@ export const getBoardz = async (page: number): Promise<getBoardsListResponse> =>
   })) as AxiosResponse<getBoardsListResponse>;
   return result.data;
 };
+
 export const getBoardzCount = async (): Promise<{ ok: boolean; mesage: string; count: number }> => {
   const result = (await AxiosRequest({
     method: "get",
@@ -29,6 +30,7 @@ export const getBoardzCount = async (): Promise<{ ok: boolean; mesage: string; c
   })) as AxiosResponse<{ ok: boolean; mesage: string; count: number }>;
   return result.data;
 };
+
 export const getSingleBoardz = async (boardId: string): Promise<getSingleBoardzPostResponse> => {
   const result = (await AxiosRequest({
     url: `/boardz/${boardId}`,
@@ -36,6 +38,7 @@ export const getSingleBoardz = async (boardId: string): Promise<getSingleBoardzP
   })) as AxiosResponse<getSingleBoardzPostResponse>;
   return result.data;
 };
+
 export const postLikeBoardz = async (boardId: string): Promise<postLikeResponse> => {
   const result = (await AxiosRequest({
     method: "post",
@@ -49,6 +52,7 @@ export const postLikeBoardz = async (boardId: string): Promise<postLikeResponse>
     ok: true,
   };
 };
+
 export const putCreateBoardz = async (
   boardData: newBoardPostData
 ): Promise<newBoardPostDataResponse> => {
@@ -59,6 +63,7 @@ export const putCreateBoardz = async (
   })) as AxiosResponse<newBoardPostDataResponse>;
   return result.data;
 };
+
 export const putCommentHandler = async (
   boardId: string,
   commentContent: string

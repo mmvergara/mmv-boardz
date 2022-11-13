@@ -29,6 +29,8 @@ export const postLogin = async (Logindata: LoginForm): Promise<authResponse> => 
 export const postLogout = async () => {
   await axios.post(`${mainUrl}/auth/logout`, {}, { withCredentials: true });
 };
+
+
 export const patchChangePassword = async (
   ChangePassData: ChangePassForm
 ): Promise<authResponse> => {
@@ -39,6 +41,7 @@ export const patchChangePassword = async (
   });
   return result;
 };
+
 export const patchChangeUsername = async (
   ChangeUsernameData: ChangeUsernameForm
 ): Promise<authResponse> => {
@@ -49,6 +52,7 @@ export const patchChangeUsername = async (
   });
   return result;
 };
+
 export const patchChangeEmail = async (ChangeEmailData: ChangeEmailForm): Promise<authResponse> => {
   const result = await AuthRequest({
     method: "patch",
@@ -57,6 +61,7 @@ export const patchChangeEmail = async (ChangeEmailData: ChangeEmailForm): Promis
   });
   return result;
 };
+
 export const patchChangeUserPic = async (ChangeUserPicData: FormData): Promise<authResponse> => {
   const result = await AuthRequest({
     method: "patch",

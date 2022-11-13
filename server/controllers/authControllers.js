@@ -41,7 +41,6 @@ exports.putRegister = async (req, res, next) => {
     next(err);
   }
 };
-
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const validationErrors = validationResult(req);
