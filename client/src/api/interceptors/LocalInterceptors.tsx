@@ -5,7 +5,6 @@ axios.defaults.withCredentials = true
 const axiosClient = axios.create({
   baseURL,
   withCredentials: true,
-
 });
 
 export const AuthRequest = async (reqConfig: reqConfing): Promise<authResponse> => {

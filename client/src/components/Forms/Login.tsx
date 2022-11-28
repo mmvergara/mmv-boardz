@@ -14,6 +14,7 @@ import { AuthSliceActions } from "../../state/AuthSlice";
 import { ErrHandlingSliceActions } from "../../state/ErrHandlingSlice";
 import { postLogin } from "../../api/AuthController";
 import { useState } from "react";
+import DummyAccount from "../DummyAccount";
 const LoginIndex: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,14 +41,14 @@ const LoginIndex: React.FC = () => {
     }
     setIsLoading(false);
   };
-    const formik = useFormik({
-      initialValues: {
-        email: "salt2@gmail.com",
-        password: "salt1234",
-      },
-      validationSchema: loginValidationSchema,
-      onSubmit: loginFormSubmitHandler,
-    });
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: loginValidationSchema,
+    onSubmit: loginFormSubmitHandler,
+  });
 
   return (
     <ThemeProvider theme={CrownTheme}>
@@ -101,7 +102,9 @@ const LoginIndex: React.FC = () => {
                 Register
               </Button>
             </Link>
+            <DummyAccount />
           </Box>
+
           {isLoading &&
             "Backend is hosted for free by onRender.com logging in might take a while, service will speed up once the first response is received."}
         </Container>

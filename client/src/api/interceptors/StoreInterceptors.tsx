@@ -45,4 +45,5 @@ interface errResponse {
   status: number;
   message: string;
   ok: boolean;
+  data: null;
 }
